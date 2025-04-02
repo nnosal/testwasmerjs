@@ -1,5 +1,5 @@
 /*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */
-// Library for avoid CORS issue with GH Pages (!require no subfolder + not minified) 
+// Library for avoid CORS issue with GH Pages (!require no subfolder) 
 // URL: https://github.com/gzuidhof/coi-serviceworker
 let coepCredentialless = false;
 if (typeof window === 'undefined') {
