@@ -64,7 +64,10 @@ Le projet est pré-configuré pour GitHub Pages. Un workflow s'occupe d'installe
    2. Rust: "[rustwasm/wasm-pack](https://github.com/rustwasm/wasm-pack)" ou ["yewstack/yew"](https://github.com/yewstack/yew)
    3. Flutter, il suffit de faire `flutter build web --wasm` mais beaucoup de module ne le supporte pas.
    4. Plus? provenant de wasm3: [Cookbook.md](https://github.com/wasm3/wasm3/blob/main/docs/Cookbook.md) ou bien les démos : [Demos.md](https://github.com/wasm3/wasm3/blob/main/docs/Demos.md)
-4. D'autres choses utiles: [brendandburns/caddy-wasm](https://github.com/brendandburns/caddy-wasm) : Un plugin pour caddy-wasm ou bien "[wasmerio/winterjs](https://github.com/wasmerio/winterjs)" un serveur js optimisé pour WASM, c'est le moteur de déploiement "edge" de wasmer.
+4. Wordpress: 
+   1. Le WASM officiel ["WordPress/wordpress-playground"](https://github.com/WordPress/wordpress-playground) qui marche avec des [blueprint](https://github.com/ProgressPlanner/blueprint-builder).
+   2. Exemple de mise à jour via PR: "[wp-wasm-deploy-preview-example](https://github.com/fabiankaegy/wp-wasm-deploy-preview-example)"
+5. D'autres choses utiles: [brendandburns/caddy-wasm](https://github.com/brendandburns/caddy-wasm) : Un plugin pour caddy-wasm ou bien "[wasmerio/winterjs](https://github.com/wasmerio/winterjs)" un serveur JS optimisé pour WASM, c'est le moteur de déploiement "edge" de wasmer.
 
 ## 📜 Licence
 
