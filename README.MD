@@ -53,6 +53,19 @@ Le projet est pré-configuré pour GitHub Pages. Un workflow s'occupe d'installe
 2. La version CDN via unpkg "[https://unpkg.com/@wasmer/sdk@0.9.0/dist/index.mjs](https://unpkg.com/@wasmer/sdk@0.9.0/dist/index.mjs)" peut causer des timeouts Cloudflare d'où l'import via npm.
 3. Testé non fonctionnel sur Firefox de mon côté, tout les moteurs Webkit sont OK.
 
+## Allez plus loin?
+1. "[container2wasm/container2wasm](https://github.com/container2wasm/container2wasm)" : Convertir des containeurs sous format WASM.
+2. "[soyuka/php-wasm](https://github.com/soyuka/php-wasm)": Compiler via docker son propre WASM pour PHP, voir son intégration réussie dans la doc de PHP: [php/web-php/pull/1097](https://github.com/php/web-php/pull/1097) ou bien son usage avancé sur [seanmorris/php-wasm](https://github.com/seanmorris/php-wasm).
+3. Pour la compilation en WASM: 
+   1. Multi: "[WebAssembly/binaryen](https://github.com/WebAssembly/binaryen)": dispose de multiples outils dans divers langages.
+   1. C: "[emscripten-core/emscripten](https://github.com/emscripten-core/emscripten)", voir par exemple [sql.js](https://github.com/sql-js/sql.js).
+   1. .NET: "[dev-wasm/dev-wasm-dotnet](https://github.com/dev-wasm/dev-wasm-dotnet)"
+   1. Go: "[tinygo-org/tinygo](https://github.com/tinygo-org/tinygo)" 
+   2. Rust: "[rustwasm/wasm-pack](https://github.com/rustwasm/wasm-pack)" ou ["yewstack/yew"](https://github.com/yewstack/yew)
+   3. Flutter, il suffit de faire `flutter build web --wasm` mais beaucoup de module ne le supporte pas.
+   4. Plus? provenant de wasm3: [Cookbook.md](https://github.com/wasm3/wasm3/blob/main/docs/Cookbook.md) ou bien les démos : [Demos.md](https://github.com/wasm3/wasm3/blob/main/docs/Demos.md)
+4. D'autres choses utiles: [brendandburns/caddy-wasm](https://github.com/brendandburns/caddy-wasm) : Un plugin pour caddy-wasm ou bien "[wasmerio/winterjs](https://github.com/wasmerio/winterjs)" un serveur js optimisé pour WASM, c'est le moteur de déploiement "edge" de wasmer.
+
 ## 📜 Licence
 
 MIT License - Nicolas NOSAL - 2025
