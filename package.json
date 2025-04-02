@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@wasmer/sdk": "^0.9.0"
+  },
+  "devDependencies": {
+    "vite": "^6.2.4"
+  },
+  "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "caddy": "mise use caddy && open http://localhost ; caddy run -w"
+  }
+}

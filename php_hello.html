@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démonstration Python avec Wasmer</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2c3e50;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            margin: 2rem auto;
+            width: 80%;
+            max-width: 600px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        #output {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+
+    <script type="module">
+        // import { init, Wasmer } from 'https://unpkg.com/@wasmer/sdk@0.9.0/dist/index.mjs';
+        import { init, Wasmer } from './node_modules/@wasmer/sdk/dist/index.mjs';
+
+        let phpPkg = null;
+
+        async function loadWasmerAndPHP() {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Chargement de Wasmer et PHP...';
+
+            try {
+                console.log("Initialisation de Wasmer...");
+                await init();
+                console.log("Wasmer initialisé");
+
+                console.log("Chargement du package PHP...");
+                phpPkg = await Wasmer.fromRegistry("php/php");
+                console.log("Package PHP chargé");
+
+                outputDiv.innerHTML = `<i class="fas fa-check-circle"></i> Prêt à exécuter PHP !`;
+            } catch (error) {
+                console.error("Erreur lors du chargement :", error);
+                outputDiv.innerHTML = `<i class="fas fa-bug"></i> Erreur de chargement : ${error.message}`;
+            }
+        }
+
+        async function runPhpDemo() {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Exécution en cours...';
+
+            try {
+                if (!phpPkg) {
+                    throw new Error("Le package PHP n'est pas encore chargé.");
+                }
+
+                console.log("Exécution du code PHP...");
+                const instance = await phpPkg.entrypoint.run({
+                    args: ["-r", "echo 'Hello from PHP!';"]
+                });
+
+                console.log("Attente du résultat...");
+                const { code, stdout } = await instance.wait();
+                console.log(`Résultat obtenu: code ${code}, stdout: ${stdout}`);
+
+                outputDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${stdout}`;
+            } catch (error) {
+                console.error("Erreur lors de l'exécution :", error);
+                outputDiv.innerHTML = `<i class="fas fa-bug"></i> Erreur : ${error.message}`;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadWasmerAndPHP(); // Charge PHP dès le chargement de la page
+            document.getElementById('runDemo').addEventListener('click', (e) => {
+                e.preventDefault();
+                runPhpDemo();
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <header>
+        <h2><i class="fas fa-cogs"></i> Exécution de PHP</h2>
+        <p>Cette démonstration exécute du code PHP en utilisant Wasmer.</p>
+    </header>
+
+    <main>
+        <div id="output">
+            <i class="fas fa-spinner fa-spin"></i> Chargement...
+        </div>
+        <a href="#" class="btn" id="runDemo">
+            <i class="fas fa-play"></i> Exécuter la démo
+        </a>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - Démo Wasmer & Python</p>
+    </footer>
+
+</body>
+</html>
