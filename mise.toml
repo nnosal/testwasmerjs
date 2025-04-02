@@ -3,6 +3,9 @@ bun = "latest"
 caddy = "latest"
 
 [tasks]
+# Install deps
 install="bun install"
+# Run dev mode (vite)
 vite="bun run --bun dev"
+# Run dev mode (caddy)
 caddy="bun run --bun caddy"

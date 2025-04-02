@@ -7,7 +7,7 @@
     "vite-plugin-static-copy": "^2.3.0"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "vite build",
     "caddy": "mise use caddy && open http://localhost ; caddy run -w"
   }

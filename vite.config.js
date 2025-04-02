@@ -25,6 +25,7 @@ export default defineConfig({
       targets: [
         { src: './node_modules/@wasmer/sdk/dist/', dest: './node_modules/@wasmer/sdk/' },
         { src: '*.html', dest: '.' },
+        { src: 'css', dest: '.' },
         { src: 'coi-serviceworker.js', dest: '.' },
         { src: 'Caddyfile', dest: '.' }
       ]
