@@ -118,6 +118,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
+            check_isolated();
             loadWasmerAndPHP(); // Charge PHP dès le chargement de la page
             document.getElementById('runDemo').addEventListener('click', (e) => {
                 e.preventDefault();
