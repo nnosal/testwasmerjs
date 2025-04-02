@@ -13,7 +13,7 @@ POC très rapide démontrant l'exécution de modules Wasm dans le navigateur via
 
 ## Pourquoi?
 
-Cela fait plus de 10 ans que le WASM est en cours de développement, mais ce n'est que récemment que nous avons des applications plus matures pour être utiliser dans les navigateurs web. Son usage viendra compléter la containerisation qui succède à la virtualisation. Offrant dans le futur d'avantage de facilité pour prévisualiser dans son navigateur une maquette, une snapshot, ou même disposé d'une interface de gestion découplée directement depuis le dépot Github (d'où ce POC).
+Cela fait près de 10 ans que le [WASM](https://en.wikipedia.org/wiki/WebAssembly) est en cours de développement, mais ce n'est que récemment que nous avons des applications plus matures pour être utiliser dans les navigateurs web. Son usage viendra compléter la containerisation qui succède à la virtualisation. Offrant dans le futur d'avantage de facilité pour prévisualiser dans son navigateur une maquette, une snapshot, ou même disposé d'une interface de gestion découplée directement depuis le dépot Github (d'où ce POC).
 
 ## 🧩 Démos disponibles
 
