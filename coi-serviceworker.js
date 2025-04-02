@@ -127,5 +127,3 @@ function check_isolated(){
     el.innerHTML = `Cross origin isolated: ${window.crossOriginIsolated ? "✅" : "❌"}`
     document.body.append(el);
 }
-
-check_isolated();
