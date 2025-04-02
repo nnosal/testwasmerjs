@@ -60,7 +60,7 @@ Le projet est pré-configuré pour GitHub Pages. Un workflow s'occupe d'installe
    1. Multi: "[WebAssembly/binaryen](https://github.com/WebAssembly/binaryen)": dispose de multiples outils dans divers langages.
    1. C: "[emscripten-core/emscripten](https://github.com/emscripten-core/emscripten)", voir par exemple [sql.js](https://github.com/sql-js/sql.js).
    1. .NET: "[dev-wasm/dev-wasm-dotnet](https://github.com/dev-wasm/dev-wasm-dotnet)"
-   1. Go: "[tinygo-org/tinygo](https://github.com/tinygo-org/tinygo)" 
+   1. Go: "[tinygo-org/tinygo](https://github.com/tinygo-org/tinygo)", voir aussi "[maxence-charriere/go-app](https://github.com/maxence-charriere/go-app)".
    2. Rust: "[rustwasm/wasm-pack](https://github.com/rustwasm/wasm-pack)" ou ["yewstack/yew"](https://github.com/yewstack/yew)
    3. Flutter, il suffit de faire `flutter build web --wasm` mais beaucoup de module ne le supporte pas.
    4. Plus? provenant de wasm3: [Cookbook.md](https://github.com/wasm3/wasm3/blob/main/docs/Cookbook.md) ou bien les démos : [Demos.md](https://github.com/wasm3/wasm3/blob/main/docs/Demos.md)
