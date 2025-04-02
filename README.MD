@@ -7,9 +7,13 @@ POC très rapide démontrant l'exécution de modules Wasm dans le navigateur via
 
 ## A Propos
 
-1. Le projet utilise "wasmer", qui dispose d'un registre de wasm prêt à l'emploi (https://wasmer.io/products/registry).
+1. Le projet utilise "[wasmer](https://github.com/wasmerio/wasmer)", qui dispose d'un registre de wasm prêt à l'emploi (https://wasmer.io/products/registry).
 2. J'utilise la partie SDK JS: https://docs.wasmer.io/sdk/wasmer-js qui est la plus intéréssante car on peux la packager dans n'importe quel page html, même sur github pages.
-3. J'ai configuré vite mais il n'est pas nécessaire, l'idée est de montrer simplement qu'il n'y pas besoin de compilation moderne (typescript, webpack, etc) pour utiliser du WASM.
+3. J'ai configuré vite mais il n'est pas nécessaire, l'idée est de montrer simplement qu'il n'y pas besoin de compilation moderne (typescript, webpack, etc) ni de déploiement spécifique pour utiliser du WASM. 
+
+## Pourquoi?
+
+Cela fait plus de 10 ans que le WASM est en cours de développement, mais ce n'est que récemment que nous avons des applications plus matures pour être utiliser dans les navigateurs web. Son usage viendra compléter la containerisation qui succède à la virtualisation. Offrant dans le futur d'avantage de facilité pour prévisualiser dans son navigateur une maquette, une snapshot, ou même disposé d'une interface de gestion découplée directement depuis le dépot Github (d'où ce POC).
 
 ## 🧩 Démos disponibles
 
@@ -40,7 +44,7 @@ POC très rapide démontrant l'exécution de modules Wasm dans le navigateur via
 
 ### 🚀 Test: Production
 
-Le projet est pré-configuré pour GitHub Pages. Un workflow s'occupe d'installer les dépendances et publier le rendu statique : [https://github.com/nnosal/testwasmerjs](https://github.com/X/testwasmerjs)
+Le projet est pré-configuré pour GitHub Pages. Un workflow s'occupe d'installer les dépendances et publier le rendu statique : [https://github.com/nnosal/testwasmerjs](https://github.com/nnosal/testwasmerjs)
 
 ## ⚠️ Limitations connues
 
