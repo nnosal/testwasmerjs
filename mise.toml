@@ -1,0 +1,8 @@
+[tools]
+bun = "latest"
+caddy = "latest"
+
+[tasks]
+install="bun install"
+vite="bun run --bun dev"
+caddy="bun run --bun caddy"
