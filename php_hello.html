@@ -104,7 +104,8 @@
 
                 console.log("Exécution du code PHP...");
                 const instance = await phpPkg.entrypoint.run({
-                    args: ["-r", "echo 'Hello from PHP!';"]
+                    //args: ["-r", "echo 'Hello from PHP!';"]
+                    args: ["-t", "app", '-S', 'localhost:80']
                 });
 
                 console.log("Attente du résultat...");

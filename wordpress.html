@@ -75,18 +75,18 @@
 
         async function loadWasmerAndPHP() {
             const outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Chargement de Wasmer et PHP...';
+            outputDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Chargement de Wasmer et Wordpress...';
 
             try {
                 console.log("Initialisation de Wasmer...");
                 await init();
                 console.log("Wasmer initialisé");
 
-                console.log("Chargement du package PHP...");
+                console.log("Chargement du package Wordpress...");
                 phpPkg = await Wasmer.fromRegistry("wasmer-examples/php-wasmer-starter");
-                console.log("Package PHP chargé");
+                console.log("Package Wordpress chargé");
 
-                outputDiv.innerHTML = `<i class="fas fa-check-circle"></i> Prêt à exécuter PHP !`;
+                outputDiv.innerHTML = `<i class="fas fa-check-circle"></i> Prêt à exécuter Wordpress !`;
             } catch (error) {
                 console.error("Erreur lors du chargement :", error);
                 outputDiv.innerHTML = `<i class="fas fa-bug"></i> Erreur de chargement : ${error.message}`;
@@ -99,12 +99,12 @@
 
             try {
                 if (!phpPkg) {
-                    throw new Error("Le package PHP n'est pas encore chargé.");
+                    throw new Error("Le package Wordpress n'est pas encore chargé.");
                 }
 
-                console.log("Exécution du code PHP...");
+                console.log("Exécution du code Wordpress...");
                 const instance = await phpPkg.entrypoint.run({
-                    args: ["-r", "echo 'Hello from PHP!';"]
+                    args: ["-t", "app", '-S', 'localhost:80']
                 });
 
                 console.log("Attente du résultat...");
@@ -131,7 +131,7 @@
 <body>
 
     <header>
-        <h2><i class="fas fa-cogs"></i> Exécution de PHP</h2>
+        <h2><i class="fas fa-cogs"></i> Exécution de Wordpress</h2>
         <p>Cette démonstration exécute Wordpress en utilisant Wasmer.</p>
     </header>
 
