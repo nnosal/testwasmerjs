@@ -29,27 +29,22 @@ class PHP {
 }
 
 document.addEventListener("DOMContentLoaded", async() => {
+  // Load CORS if available
+  if (typeof check_isolated === 'function') check_isolated();
+  // Define dom elements to re-use
   const outputDiv = document.getElementById('output');
   const phpVersionSelect = document.getElementById('phpVersion');
   const useCustomCode = document.getElementById('useCustomCode');
   const customCodeContainer = document.getElementById('customCodeContainer');
-  
   // Initialize Monaco Editor
   require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' }});
   require(['vs/editor/editor.main'], async function() {
     const editor = monaco.editor.create(customCodeContainer, {
-      value: `<?php 
-
-// Display PHP information
-phpinfo(); 
-
-?>`,
+      value: `<?php\n\n// Display PHP information\nphpinfo();\n\n?>`,
       language: 'php',
       theme: 'vs-dark',
       automaticLayout: true,
-      minimap: {
-        enabled: false
-      },
+      minimap: { enabled: false },
       scrollBeyondLastLine: false,
       fontSize: 14,
       lineNumbers: 'on',
@@ -62,31 +57,34 @@ phpinfo();
         horizontalScrollbarSize: 10
       }
     });
-
-    outputDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Chargement de Wasmer et SoyukaPHP...';
-    runPhp = await PHP.loadPhp(phpVersionSelect.value.split('/').pop());
-    outputDiv.innerHTML = 'Prêt à exécuter PHP !';
-
+    // Display / Hide text-editor
     useCustomCode.addEventListener('change', () => {
       customCodeContainer.style.display = useCustomCode.checked ? 'block' : 'none';
       if (useCustomCode.checked) {
         editor.layout();
       }
     });
-
+    // Load Wasm Module...
+    outputDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Chargement de Wasmer et SoyukaPHP...';
+    runPhp = await PHP.loadPhp(phpVersionSelect.value.split('/').pop());
+    outputDiv.innerHTML = 'Prêt à exécuter PHP !';
+    // Reload new Wasm module
     phpVersionSelect.addEventListener('change', async () => {
       outputDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Chargement de la nouvelle version...';
       PHP.runPhp = null;
       runPhp = await PHP.loadPhp(phpVersionSelect.value.split('/').pop());
       outputDiv.innerHTML = 'Prêt à exécuter PHP !';
     });
-
+    // Execute php-code (keyboard shortcut - "save action")
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); document.querySelector('#runDemo').click(); }
+    });
+    // Execute php-code (click button)
     document.querySelector('#runDemo').addEventListener('click', async() => {
       const outputDiv = document.getElementById('output');
       const useCustomCode = document.getElementById('useCustomCode');
       let bufferOutput = null;
       PHP.buffer = [];
-      
       const phpCode = useCustomCode.checked ? editor.getValue() : '<?php phpinfo(); ?>';
       runPhp(phpCode);
       bufferOutput = PHP.buffer.join("");
