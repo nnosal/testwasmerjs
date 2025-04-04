@@ -1,0 +1,96 @@
+let runPhp = ""
+class PHP {
+  static buffer = [];
+  static runPhp = null;
+  static version = '';
+  static async loadPhp(version = "7.4.31") {
+    if (PHP.runPhp) {
+      return PHP.runPhp;
+    }
+
+    const { ccall } = await import(`./php-web/${version}/php-web.mjs`).then(module => module.default({
+      print(data) {
+        if (!data) {
+          return;
+        }
+
+        if (PHP.buffer.length) {
+          PHP.buffer.push("\n");
+        }
+        PHP.buffer.push(data);
+      },
+    }));
+
+    PHP.version = ccall("phpw_exec", "string", ["string"], ["phpversion();"]),
+    console.log("PHP wasm %s loaded.", PHP.version);
+    PHP.runPhp = (code) => ccall("phpw_run", null, ["string"], ["?>" + code]);
+    return PHP.runPhp;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async() => {
+  const outputDiv = document.getElementById('output');
+  const phpVersionSelect = document.getElementById('phpVersion');
+  const useCustomCode = document.getElementById('useCustomCode');
+  const customCodeContainer = document.getElementById('customCodeContainer');
+  
+  // Initialize Monaco Editor
+  require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' }});
+  require(['vs/editor/editor.main'], async function() {
+    const editor = monaco.editor.create(customCodeContainer, {
+      value: `<?php 
+
+// Display PHP information
+phpinfo(); 
+
+?>`,
+      language: 'php',
+      theme: 'vs-dark',
+      automaticLayout: true,
+      minimap: {
+        enabled: false
+      },
+      scrollBeyondLastLine: false,
+      fontSize: 14,
+      lineNumbers: 'on',
+      roundedSelection: false,
+      scrollbar: {
+        vertical: 'visible',
+        horizontal: 'visible',
+        useShadows: false,
+        verticalScrollbarSize: 10,
+        horizontalScrollbarSize: 10
+      }
+    });
+
+    outputDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Chargement de Wasmer et SoyukaPHP...';
+    runPhp = await PHP.loadPhp(phpVersionSelect.value.split('/').pop());
+    outputDiv.innerHTML = 'Prêt à exécuter PHP !';
+
+    useCustomCode.addEventListener('change', () => {
+      customCodeContainer.style.display = useCustomCode.checked ? 'block' : 'none';
+      if (useCustomCode.checked) {
+        editor.layout();
+      }
+    });
+
+    phpVersionSelect.addEventListener('change', async () => {
+      outputDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Chargement de la nouvelle version...';
+      PHP.runPhp = null;
+      runPhp = await PHP.loadPhp(phpVersionSelect.value.split('/').pop());
+      outputDiv.innerHTML = 'Prêt à exécuter PHP !';
+    });
+
+    document.querySelector('#runDemo').addEventListener('click', async() => {
+      const outputDiv = document.getElementById('output');
+      const useCustomCode = document.getElementById('useCustomCode');
+      let bufferOutput = null;
+      PHP.buffer = [];
+      
+      const phpCode = useCustomCode.checked ? editor.getValue() : '<?php phpinfo(); ?>';
+      runPhp(phpCode);
+      bufferOutput = PHP.buffer.join("");
+      outputDiv.innerHTML = bufferOutput;
+    });
+  });
+});

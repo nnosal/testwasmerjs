@@ -9,3 +9,17 @@ install="bun install"
 vite="bun run --bun dev"
 # Run dev mode (caddy)
 caddy="bun run --bun caddy"
+
+[tasks.update_soyuka_wasm]
+dir = "{{ config_root }}/js/soyuka/php-web"
+alias = "spw"
+description = 'Build soyuka-php-wasm and update files'
+env.PHP_BRANCH = "PHP-8.3.0"
+env.LIBXML2_TAG = "v2.9.10"
+run = '''
+echo "Building: $PHP_BRANCH (libxml2: $LIBXML2_TAG)..."
+clean=0 # clean build folder after job is done ?
+! test -d soyuka-php-wasm && git clone --depth 1 --single-branch --branch main https://github.com/soyuka/php-wasm soyuka-php-wasm
+cd soyuka-php-wasm && docker buildx bake --set default.args.PHP_BRANCH=$PHP_BRANCH --set default.args.LIBXML2_TAG=$LIBXML2_TAG && cp -f build/php-web.mjs ../php-web.mjs && cp -f build/php-web.wasm ../php-web.wasm
+test "$clean" -eq 1 && cd .. && test -d soyuka-php-wasm && rm -rf soyuka-php-wasm
+'''
