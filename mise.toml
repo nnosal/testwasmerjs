@@ -23,3 +23,40 @@ clean=0 # clean build folder after job is done ?
 cd soyuka-php-wasm && docker buildx bake --set default.args.PHP_BRANCH=$PHP_BRANCH --set default.args.LIBXML2_TAG=$LIBXML2_TAG && cp -f build/php-web.mjs ../php-web.mjs && cp -f build/php-web.wasm ../php-web.wasm
 test "$clean" -eq 1 && cd .. && test -d soyuka-php-wasm && rm -rf soyuka-php-wasm
 '''
+
+[tasks.make_website_data]
+dir = "{{ config_root }}"
+alias = "mwd"
+description = 'Build soyuka-php-wasm DATA'
+run = '''
+echo "Building APP_DATA: $PHP_BRANCH (libxml2: $LIBXML2_TAG)..."
+docker run --rm \
+  -v "$(pwd)/app:/app" \
+  -v "$(pwd)/js/soyuka/php-web/builded_app:/dist/build" \
+  -w /dist \
+  soyuka/php-wasm:8.2.9 \
+  python3 /emsdk/upstream/emscripten/tools/file_packager.py \
+    build/php-web.data \
+    --use-preload-cache \
+    --lz4 \
+    --preload /app \
+    --js-output=build/php-web.data.js \
+    --no-node \
+    --exclude '*/.*' \
+             '*/*md' \
+             '*/castor.php' \
+             '*/CHANGELOG' \
+             '*/composer.*' \
+             '*/doc' \
+             '*/docs' \
+             '*/LICENSE' \
+    --export-name=createPhpModule
+cd $(pwd)/js/soyuka/php-web/builded_app
+# 1.A. Use template file
+test -f php-web.data.js && sed '/--pre-js/r php-web.data.js' _php-web.mjs.tpl > php-web.mjs && rm php-web.data.js
+# 1.B. Create fresh template file
+# cp -f ../8.3.0/php-web.mjs _php-web.mjs.tpl && sed -i '' "s|wasmBinaryFile = new URL('php-web.wasm', import.meta.url).href;|wasmBinaryFile = new URL('../'+document.getElementById('phpVersion').value.split('/').pop()+'/php-web.wasm', import.meta.url).href;|" _php-web.mjs.tpl
+# 2. Patch data path
+sed -i.bak "s|var REMOTE_PACKAGE_BASE = 'php-web.data';|var REMOTE_PACKAGE_BASE = 'js/soyuka/php-web/builded_app/php-web.data';|" php-web.mjs
+test -f php-web.mjs.bak && rm php-web.mjs.bak
+'''
