@@ -36,27 +36,30 @@ document.addEventListener("DOMContentLoaded", async() => {
   const phpVersionSelect = document.getElementById('phpVersion');
   const useCustomCode = document.getElementById('useCustomCode');
   const customCodeContainer = document.getElementById('customCodeContainer');
+  const runBtn = document.querySelector('#runDemo');
+  // Define vars to re-use
+  const monaco_settings = {
+    value: `<?php\n\n// Display PHP information\nphpinfo();\n\n?>`,
+    language: 'php',
+    theme: 'vs-dark',
+    automaticLayout: true,
+    minimap: { enabled: false },
+    scrollBeyondLastLine: false,
+    fontSize: 14,
+    lineNumbers: 'on',
+    roundedSelection: false,
+    scrollbar: {
+      vertical: 'visible',
+      horizontal: 'visible',
+      useShadows: false,
+      verticalScrollbarSize: 10,
+      horizontalScrollbarSize: 10
+    }
+  };
   // Initialize Monaco Editor
   require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' }});
   require(['vs/editor/editor.main'], async function() {
-    const editor = monaco.editor.create(customCodeContainer, {
-      value: `<?php\n\n// Display PHP information\nphpinfo();\n\n?>`,
-      language: 'php',
-      theme: 'vs-dark',
-      automaticLayout: true,
-      minimap: { enabled: false },
-      scrollBeyondLastLine: false,
-      fontSize: 14,
-      lineNumbers: 'on',
-      roundedSelection: false,
-      scrollbar: {
-        vertical: 'visible',
-        horizontal: 'visible',
-        useShadows: false,
-        verticalScrollbarSize: 10,
-        horizontalScrollbarSize: 10
-      }
-    });
+    const editor = monaco.editor.create(customCodeContainer, monaco_settings);
     // Display / Hide text-editor
     useCustomCode.addEventListener('change', () => {
       customCodeContainer.style.display = useCustomCode.checked ? 'block' : 'none';
@@ -77,10 +80,12 @@ document.addEventListener("DOMContentLoaded", async() => {
     });
     // Execute php-code (keyboard shortcut - "save action")
     document.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); document.querySelector('#runDemo').click(); }
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); runBtn.click(); }
     });
+    // Execute php-code (realtime on monaco-editor)
+    editor.getModel().onDidChangeContent((v) => { runBtn.click(); });
     // Execute php-code (click button)
-    document.querySelector('#runDemo').addEventListener('click', async() => {
+    runBtn.addEventListener('click', async() => {
       const outputDiv = document.getElementById('output');
       const useCustomCode = document.getElementById('useCustomCode');
       let bufferOutput = null;

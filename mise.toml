@@ -30,8 +30,9 @@ alias = "mwd"
 description = 'Build soyuka-php-wasm DATA'
 run = '''
 echo "Building APP_DATA: $PHP_BRANCH (libxml2: $LIBXML2_TAG)..."
+# cd $(pwd)/app2 && composer install; cd -
 docker run --rm \
-  -v "$(pwd)/app:/app" \
+  -v "$(pwd)/app2:/app" \
   -v "$(pwd)/js/soyuka/php-web/builded_app:/dist/build" \
   -w /dist \
   soyuka/php-wasm:8.2.9 \
@@ -50,6 +51,7 @@ docker run --rm \
              '*/doc' \
              '*/docs' \
              '*/LICENSE' \
+             '*/README.MD' \
     --export-name=createPhpModule
 cd $(pwd)/js/soyuka/php-web/builded_app
 # 1.A. Use template file
