@@ -32,9 +32,9 @@ Cela fait près de 10 ans que le [WASM](https://en.wikipedia.org/wiki/WebAssembl
   - Python (via WASM)
   - WordPress (limité par la configuration réseau)
 - 🔥 **Démos BONUS** :
-  - SoykaPHP ( `mise r update_soyuka_wasm` pour créer sa version custom de php / `mise r make_website_data` pour màj l'app2 ):
-    - "soyuka_phpinfo.html": Execution simple (phpw_exec) de code php + Editeur de code pour override.
-    - "soyuka_folderapp.html": Execution d'une app (index.php + composer) packagé dans un fichier, qui génère des info utilisateurs + override du fichier index.php via editeur de code.
+  - [SoyukaPHP](https://github.com/soyuka/php-wasm) ( `mise r update_soyuka_wasm` pour créer sa version custom de php / `mise r make_website_data` pour màj l'app2 ):
+    - "soyuka_phpinfo.html": Execution simple (phpw_run) de code php + Editeur de code pour override.
+    - "soyuka_folderapp.html": Execution avancée (phpw_exec) d'une app (index.php + composer) packagé dans un fichier, qui génère des info utilisateurs + override du fichier index.php via editeur de code.
 - 🌐 **Testable immédiatement (via GitHub Pages)** - grâce à "Github Actions" + le workaround "[coi-serviceworker](https://github.com/gzuidhof/coi-serviceworker)" afin de permettre la compliance CORS nécessaire pour executer Wasmer.
 
 ## 🛠 Test: développement (optionnel)
