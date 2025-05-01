@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démonstration PHP avec SoyukaPHP</title>
+    <!-- Enable CORS-compliance for GH Pages-->
+    <script src="./coi-serviceworker.js"></script>
+    <!-- Some Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/black.css">
+    <!-- Monaco Editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+    <!-- WASM Load and execute.. -->
+    
+    <script src="./js/soyuka/phpinfo.js" type="module"></script>
+    <script src="./js/soyuka/php-web/7.4.31/php-web.data.js" type="module"></script>
+</head>
+<body>
+
+    <header>
+        <h2><i class="fas fa-cogs"></i> Exécution de PHP</h2>
+        <div class="controls">
+            <select id="phpVersion">
+                <option value="js/soyuka/php-web/7.4.31">7.4.31</option>
+                <option value="js/soyuka/php-web/8.0.0">8.0.0</option>
+                <option value="js/soyuka/php-web/8.1.0">8.1.0</option>
+                <option value="js/soyuka/php-web/8.2.0">8.2.0</option>
+                <option value="js/soyuka/php-web/8.3.0">8.3.0</option>
+                <option value="js/soyuka/php-web/8.4.0">8.4.0</option>
+                <option value="">Custom-Build</option>
+            </select>
+            <label class="custom-code">
+                <input type="checkbox" id="useCustomCode"> Code personnalisé
+            </label>
+        </div>
+        <p>Cette démonstration exécute du code PHP en utilisant SoyukaPHP.</p>
+        <div id="customCodeContainer" style="display: none;"></div>
+        <a href="#" class="btn" id="runDemo">
+            <i class="fas fa-play"></i> Exécuter la démo
+        </a>
+    </header>
+
+    <main class="fw">
+        <div id="output">
+            <i class="fas fa-spinner fa-spin"></i> Chargement...
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - Démo Wasmer & SoyukaPHP (phpw_run)</p>
+    </footer>
+
+</body>
+</html>

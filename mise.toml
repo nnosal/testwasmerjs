@@ -2,6 +2,10 @@
 bun = "latest"
 caddy = "latest"
 
+[alias]
+# seanmorris php-wasm-builder
+php-wasm-build = "bun:php-wasm-builder"
+
 [tasks]
 # Install deps
 install="bun install"
@@ -9,6 +13,49 @@ install="bun install"
 vite="bun run --bun dev"
 # Run dev mode (caddy)
 caddy="bun run --bun caddy"
+
+[tasks.seanmorris-build]
+alias = "smb"
+description = 'Build custom seanmorris-php-wasm (bug "error: cant open patch/php8.2.patch No such file or directory" )'
+dir = "{{ config_root }}/js/seanmorris/php-wasm"
+tools.bun = "latest"
+tools.php-wasm-build = "latest"
+#settings.npm.bun = true
+run = '''
+# 1. Create custom config file
+tee .php-wasm-rc <<EOF
+# Select a PHP version
+PHP_VERSION=8.2
+# Build the package to a directory other than the current one (RELATIVE path)
+#PHP_DIST_DIR=./public
+# Build the extensions to a directory other than the current one (RELATIVE path)
+#PHP_ASSET_DIR=./public
+# Build the cgi package to a directory other than the current one (RELATIVE path)
+#PHP_CGI_DIST_DIR=./public
+# Build the cgi package's extensions to a directory other than the current one (RELATIVE path)
+#PHP_CGI_ASSET_DIR=./public
+# Space separated list of files/directories (ABSOLUTE paths)
+# to be included under the /preload directory in the final build.
+#PRELOAD_ASSETS=~/my-project/php-scripts ~/other-dir/example.php
+# Memory to start the instance with, before growth
+#INITIAL_MEMORY=2048MB
+# Build with assertions enabled
+#ASSERTIONS=0
+# Select the optimization level
+OPTIMIZATION=3
+# Build with extensions
+WITH_GD=1
+WITH_LIBPNG=1
+WITH_LIBJPEG=1
+WITH_FREETYPE=1
+EOF
+# Fetch docker-build environment
+php-wasm-build image # bunx php-wasm-builder image
+# Clean previous build (if exist)
+php-wasm-build clean # bunx php-wasm-builder clean
+# Build new one
+php-wasm-build build web # bunx php-wasm-builder build web
+'''
 
 [tasks.update_soyuka_wasm]
 dir = "{{ config_root }}/js/soyuka/php-web"

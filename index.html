@@ -9,6 +9,27 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/green.css">
 </head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const ulPages = document.getElementById('pages');
+    let listPages = [
+      // Wasmer
+      'php_hello.html', 'python_hello.html', 'python_version.html', 'wordpress.html',
+      // Soyuka
+      'soyuka_editor-code.html', 'soyuka_editor-app.html',
+      // Seanmorris
+      'seanmorris_phptags_simple.html', 'seanmorris_phpweb_editor-code.html'
+    ];  
+    // Try load json file.. / Fallback to default list
+    fetch('./listPages.json')
+    .then(res => res.ok ? res.json() : Promise.reject()).then(json => listPages = json).catch(() => {})
+    .finally(async () => {
+      for (const p of listPages) { const r = await fetch(p, { method: 'HEAD' });
+        if(r.ok) ulPages.insertAdjacentHTML('beforeend', `<li><a href="${p}">${p}</a></li>`);
+      }
+    });
+  });
+</script>
 <body>
 
   <header>
@@ -16,14 +37,7 @@
     <p>Quick POC demonstrating the execution of Wasm modules in the browser via the Wasmer-JS SDK, without any backend or complex build process.</p>
 </header>
 <main>
-  <ul>
-    <li><a href="php_hello.html">php_hello.html</a></li>
-    <li><a href="python_hello.html">python_hello.html</a></li>
-    <li><a href="python_version.html">python_version.html</a></li>
-    <li><a href="wordpress.html">wordpress.html</a></li>
-    <li><a href="soyuka_phpinfo.html">soyuka_phpinfo.html</a></li>
-    <li><a href="soyuka_folderapp.html">soyuka_folderapp.html</a></li>
-  </ul>
+  <ul id="pages"></ul>
 </main>
 
 <footer>
