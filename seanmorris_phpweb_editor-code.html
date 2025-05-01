@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démonstration PHP avec seanmorrisPHP</title>
+    <!-- Enable CORS-compliance for GH Pages-->
+    <script src="./coi-serviceworker.js"></script>
+    <!-- Some Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/black.css">
+    <!-- Monaco Editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+    <!-- WASM Load and execute.. -->
+    <script src="./js/seanmorris/editor-code.js" type="module"></script>
+</head>
+<body>
+    <header>
+        <h2><i class="fas fa-cogs"></i> Exécution de PHP</h2>
+        <div class="controls">
+            <label class="custom-code">
+                <input type="checkbox" id="useCustomCode"> Code personnalisé
+            </label>
+        </div>
+        <p>Cette démonstration exécute du code PHP en utilisant seanmorrisPHP.</p>
+        <div id="customCodeContainer" style="display: none;"></div>
+        <a href="#" class="btn" id="runDemo">
+            <i class="fas fa-play"></i> Exécuter la démo
+        </a>
+    </header>
+
+    <main class="fw">
+        <div id="output">
+            <i class="fas fa-spinner fa-spin"></i> Chargement...
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - Démo Wasmer & <a href="https://github.com/seanmorris/php-wasm" target="_blank">seanmorrisPHP</a> (<a href="https://php-wasm.seanmorr.is/getting-started/php-in-js.html" target="_blank">documentation</a>)</p>
+    </footer>
+
+</body>
+</html>

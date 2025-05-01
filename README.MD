@@ -31,6 +31,13 @@ Cela fait près de 10 ans que le [WASM](https://en.wikipedia.org/wiki/WebAssembl
   - PHP (via WASM)
   - Python (via WASM)
   - WordPress (limité par la configuration réseau)
+- 🔥 **Démos BONUS** :
+  - [SoyukaPHP](https://github.com/soyuka/php-wasm) ( `mise r update_soyuka_wasm` pour créer sa version custom de php / `mise r make_website_data` pour màj l'app2 ):
+    - "soyuka_editor-code.html": Execution simple (phpw_run) de code php + Editeur de code pour override.
+    - "soyuka_editor-app.html": Execution avancée (phpw_exec) d'une app (index.php + composer) packagé dans un fichier, qui génère des info utilisateurs + override du fichier index.php via editeur de code.
+  - [seanmorris/php-wasm](https://github.com/seanmorris/php-wasm) ([Documentation](https://php-wasm.seanmorr.is/getting-started/php-in-js.html)):
+    - "seanmorris_phptags_simple.html": Execution simple sans aucune balise JS + Démo de remote-code via HTMX.
+    - "seanmorris_phpweb_editor-code.html": Execution simple de code php + Editeur de code pour override.
 - 🌐 **Testable immédiatement (via GitHub Pages)** - grâce à "Github Actions" + le workaround "[coi-serviceworker](https://github.com/gzuidhof/coi-serviceworker)" afin de permettre la compliance CORS nécessaire pour executer Wasmer.
 
 ## 🛠 Test: développement (optionnel)
@@ -44,7 +51,7 @@ Cela fait près de 10 ans que le [WASM](https://en.wikipedia.org/wiki/WebAssembl
 
 ### 🚀 Test: Production
 
-Le projet est pré-configuré pour GitHub Pages. Un workflow s'occupe d'installer les dépendances et publier le rendu statique : [https://github.com/nnosal/testwasmerjs](https://github.com/nnosal/testwasmerjs)
+Le projet est pré-configuré pour GitHub Pages. Un workflow s'occupe d'installer les dépendances et publier le rendu statique : [https://nnosal.github.io/testwasmerjs/](https://nnosal.github.io/testwasmerjs/)
 
 ## ⚠️ Limitations connues
 

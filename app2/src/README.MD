@@ -1,0 +1,1 @@
+# Sample app 2: load composer: fakerphp/faker + generate 10 users

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démonstration PHP avec seanmorrisPhpTags : phpinfo()</title>
+    <!-- 0/ Enable CORS-compliance for GH Pages-->
+    <script src="./coi-serviceworker.js"></script>
+    <!-- 1/ Load: Seanmorris:PHP-TAGS ( = <script type="module"> import { runPhpTags } from 'https://cdn.jsdelivr.net/npm/php-wasm/PhpWeb.mjs'; runPhpTags(document); </script> ) -->
+    <script async type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/php-wasm/php-tags.jsdelivr.mjs"></script>
+</head>
+<body>
+<!-- 3/0/ Load code from a remote file and store into code#remote-code -->
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>    
+<code id="remote-code" style="display: none;" hx-request='{"noHeaders": true}' hx-trigger="load" hx-swap="innerHTML" hx-get="https://gist.githubusercontent.com/nnosal/15e9635f3a5fba06e5e6f74cf5925653/raw/901c00e49150a6304100e1d6253d4317ff0d438a/test.html"></code>
+<!-- 3/1/ PHP Code: To Execute (loaded into body tag) -->
+<script 
+    type = "text/php" 
+    data-stdin = "#remote-code"
+    data-stdout = "body"
+    data-libs = '[{"url": "https://unpkg.com/php-wasm-openssl/php8.2-openssl.so", "ini": true}]'
+    ><?php 
+    
+    /* 1/ Get remote content from Gist (stored in stdin) or fallback */
+    $content = @file_get_contents("php://stdin", false) ?: "<html><body>Page 1</body></html>";
+    file_put_contents("/page1.html", $content);
+    printf("<code>%s</code></br>",$content);
+    
+    /* Eval it? */
+    // eval($content); echo "<br/>";
+
+    /* Check if new file exist */
+    $files = scandir("/"); $htmlFiles = array_filter($files, fn($f) => preg_match('/\.html$/', $f));
+    echo json_encode(array_values($htmlFiles));
+
+    /* Finally: display phpinfo()... */
+    phpinfo();
+?></script>
+</body>
+</html>
